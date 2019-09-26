@@ -5,7 +5,7 @@ package chrome_dino;
 
 /**
  * @author George
- *
+ * Code to play the chrome dinosaur game
  */
 public class Play {
 
