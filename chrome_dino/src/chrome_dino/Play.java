@@ -3,6 +3,8 @@
  */
 package chrome_dino;
 
+import java.awt.Robot;
+
 /**
  * @author George
  * Code to play the chrome dinosaur game
