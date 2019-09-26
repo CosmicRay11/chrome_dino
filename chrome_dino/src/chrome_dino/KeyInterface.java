@@ -3,30 +3,44 @@ package chrome_dino;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
-import java.util.concurrent.TimeUnit;
 
 public class KeyInterface {
 	
-	public static boolean main(String[] args) {
+	Robot r;
+	
+	public KeyInterface() {
 
-		Robot r;
-		boolean works;
 		try {
-			r = new Robot();
+			this.r = new Robot();
 			//r.keyPress(KeyEvent.VK_SPACE);
 			//TimeUnit.SECONDS.sleep(2);
 			//r.keyRelease(KeyEvent.VK_SPACE);
-			works = true;
 			
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			works = false;
 		} 
-		
-		return works;
 	}
 	
+	public void jump_press(long ms) {
+		this.r.keyPress(KeyEvent.VK_SPACE);
+		try {
+			Thread.sleep(ms);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		this.r.keyRelease(KeyEvent.VK_SPACE);
+	}
 	
+	public void duck_press(long ms) {
+		this.r.keyPress(KeyEvent.VK_DOWN);
+		try {
+			Thread.sleep(ms);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		this.r.keyRelease(KeyEvent.VK_DOWN);
+	}	
+	
+
 	
 }
