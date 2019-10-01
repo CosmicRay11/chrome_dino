@@ -118,9 +118,11 @@ public class KeyInterface {
 		capture = capture.getSubimage(bbox[0], bbox[1], width, height);
 		int[][] pixels = new int[width][height];
 
-		for( int i = 0; i < width; i++ )
-		    for( int j = 0; j < height; j++ )
+		for( int i = 0; i < width; i++ ) {
+		    for( int j = 0; j < height; j++ ) {
 		        pixels[i][j] = capture.getRGB( i, j );
+		    }
+		}
 		
 		if (save != -1) {
 			try {
