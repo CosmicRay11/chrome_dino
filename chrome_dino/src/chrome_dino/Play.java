@@ -3,7 +3,7 @@
  */
 package chrome_dino;
 
-import java.awt.Robot;
+import java.awt.AWTException;
 
 /**
  * @author George
@@ -13,12 +13,34 @@ public class Play {
 
 	/**
 	 * @param args
+	 * @throws AWTException chrome
+	 * @throws InterruptedException 
 	 */
-	public static void main(String[] args) {
+	
+	int DINOWIDTH = 128;
+	int DINOHEIGHT = 138;
+	int DINODROP = 8; // pixels the mouth is lower than the top of the height
+	
+	public static void main(String[] args) throws AWTException, InterruptedException {
 		KeyInterface keys = new KeyInterface();
 		
-		keys.jump_press(1000);
+		//keys.jump_press(1000);
 
+		keys.load_game();
+		
+		keys.close_game();
 	}
+	
+	private static long[] determine_jump(long ms) {
+		long height = 0;
+		long jumpTime = 0;
+		
+		
+		long[] heightJump = {height, jumpTime};
+		
+		return heightJump;
+	}
+	
+
 
 }
