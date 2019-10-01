@@ -5,6 +5,8 @@ package chrome_dino;
 
 import java.awt.AWTException;
 
+import javax.swing.JComboBox.KeySelectionManager;
+
 /**
  * @author George
  * Code to play the chrome dinosaur game
@@ -20,20 +22,27 @@ public class Play {
 	int DINOWIDTH = 128;
 	int DINOHEIGHT = 138;
 	int DINODROP = 8; // pixels the mouth is lower than the top of the height
+	KeyInterface keys;
 	
-	public static void main(String[] args) throws AWTException, InterruptedException {
-		KeyInterface keys = new KeyInterface();
+	public Play() {
 		
-		//keys.jump_press(1000);
-
-		keys.load_game();
-		
-		keys.close_game();
+		keys = new KeyInterface();
 	}
 	
-	private static long[] determine_jump(long ms) {
+	public void start_play() {
+
+		try {
+			this.keys.load_game();
+		} catch (AWTException | InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public long[] determine_jump(long ms) {
 		long height = 0;
 		long jumpTime = 0;
+		
+		this.keys.take_screen();
 		
 		
 		long[] heightJump = {height, jumpTime};
