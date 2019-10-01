@@ -1,12 +1,14 @@
 package chrome_dino;
 
 import java.awt.AWTException;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
 import java.io.File;
 import java.io.IOException;
 
@@ -106,14 +108,31 @@ public class KeyInterface {
 		this.r.keyRelease(KeyEvent.VK_CONTROL);	
 	}
 	
-	public void take_screen() {
+	public int[][] take_screen(int[] bbox, int save) {
+		int width = bbox[2] - bbox[0];
+		int height = bbox[3] - bbox[1];
 		Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
 		BufferedImage capture = this.r.createScreenCapture(screenRect);
-		try {
-			ImageIO.write(capture, "bmp", new File("dino_screen"));
-		} catch (IOException e) {
-			e.printStackTrace();
+		Graphics2D gra = capture.createGraphics();
+		gra.draw(screenRect);
+		capture = capture.getSubimage(bbox[0], bbox[1], width, height);
+		int[][] pixels = new int[width][height];
+
+		for( int i = 0; i < width; i++ )
+		    for( int j = 0; j < height; j++ )
+		        pixels[i][j] = capture.getRGB( i, j );
+		
+		if (save != -1) {
+			try {
+		 
+				ImageIO.write(capture, "bmp", new File("dino_screen" + Integer.toString(save) + ".bmp"));
+				System.out.println("dino_screen" + Integer.toString(save) + ".bmp");
+		 }	catch (IOException e) {
+		 	e.printStackTrace();
+		 	}
 		}
+		
+		return pixels;
 	}
 	
 
