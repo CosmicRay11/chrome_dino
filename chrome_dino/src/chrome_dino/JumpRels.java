@@ -42,6 +42,7 @@ public class JumpRels {
 			long heightSum = 0;
 			long jumpTimeSum = 0;
 			long startDelaySum = 0;
+			System.out.println(ms);
 			for (int rep=0;rep<repetitions;rep++) {
 				long[] heightJump = player.determine_jump(ms);
 				heightSum += heightJump[0];

@@ -1,10 +1,11 @@
-/**
+ /**
  * 
  */
 package chrome_dino;
 
 import java.awt.AWTException;
 import java.awt.Color;
+import java.awt.Robot;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 
@@ -36,7 +37,7 @@ public class Play {
 		keys = new KeyInterface();
 	}
 	
-	public void play_game() {
+	public void play_game() throws AWTException {
 		
 		
 		start_play();
@@ -45,10 +46,32 @@ public class Play {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		for (int x=0; x<20; x++) {
+		
+		ScreenThread t = new ScreenThread();
+		t.start();
+		t.yield();
+		
+		JumpThread s = new JumpThread();
+		s.start();
+		s.yield();
+		
+	}
+	
+	public void test_jump(long ms) throws AWTException {
+		start_play();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		this.keys.take_screen(bbox1, 0);
+		
+		JumpThread t = new JumpThread();
+		Robot r1 = new Robot();
+		t.run(r1, ms);
+		for (int x=1; x<20; x++) {
 			this.keys.take_screen(bbox1, x);
 		}
-		
 		
 		
 	}

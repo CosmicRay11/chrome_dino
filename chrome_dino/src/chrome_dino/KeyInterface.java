@@ -32,13 +32,13 @@ public class KeyInterface {
 	}
 	
 	public void jump_press(long ms) {
-		this.r.keyPress(KeyEvent.VK_SPACE);
+		r.keyPress(KeyEvent.VK_SPACE);
 		try {
 			Thread.sleep(ms);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		this.r.keyRelease(KeyEvent.VK_SPACE);
+		r.keyRelease(KeyEvent.VK_SPACE);
 	}
 	
 	public void duck_press(long ms) {
@@ -68,7 +68,7 @@ public class KeyInterface {
 		try {
 		    Process p = Runtime.getRuntime().exec("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
 		    p.waitFor();
-		    System.out.println("Google Chrome launched!");
+		    //System.out.println("Google Chrome launched!");
 		} catch (Exception e) {
 		    e.printStackTrace();
 		}
@@ -111,6 +111,7 @@ public class KeyInterface {
 	public int[][] take_screen(int[] bbox, int save) {
 		int width = bbox[2] - bbox[0];
 		int height = bbox[3] - bbox[1];
+		System.out.println('b');
 		Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
 		BufferedImage capture = this.r.createScreenCapture(screenRect);
 		Graphics2D gra = capture.createGraphics();
@@ -128,7 +129,7 @@ public class KeyInterface {
 			try {
 		 
 				ImageIO.write(capture, "bmp", new File("dino_screen" + Integer.toString(save) + ".bmp"));
-				System.out.println("dino_screen" + Integer.toString(save) + ".bmp");
+				//System.out.println("dino_screen" + Integer.toString(save) + ".bmp");
 		 }	catch (IOException e) {
 		 	e.printStackTrace();
 		 	}
