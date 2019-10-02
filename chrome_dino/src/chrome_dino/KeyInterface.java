@@ -111,7 +111,6 @@ public class KeyInterface {
 	public int[][] take_screen(int[] bbox, int save) {
 		int width = bbox[2] - bbox[0];
 		int height = bbox[3] - bbox[1];
-		System.out.println('b');
 		Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
 		BufferedImage capture = this.r.createScreenCapture(screenRect);
 		Graphics2D gra = capture.createGraphics();

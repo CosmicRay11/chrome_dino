@@ -47,14 +47,6 @@ public class Play {
 			e.printStackTrace();
 		}
 		
-		ScreenThread t = new ScreenThread();
-		t.start();
-		t.yield();
-		
-		JumpThread s = new JumpThread();
-		s.start();
-		s.yield();
-		
 	}
 	
 	public void test_jump(long ms) throws AWTException {
@@ -66,9 +58,8 @@ public class Play {
 		}
 		this.keys.take_screen(bbox1, 0);
 		
-		JumpThread t = new JumpThread();
-		Robot r1 = new Robot();
-		t.run(r1, ms);
+		this.keys.jump_press(ms);
+		
 		for (int x=1; x<20; x++) {
 			this.keys.take_screen(bbox1, x);
 		}
@@ -88,17 +79,22 @@ public class Play {
 		start_play();
 		long height = 100000;
 		long jumpTime = 0;
-		long startTime = -1;
 		int r,g,b;
 		int[][] pix;
+		long millis = 0;
 		
 		int[][][] pixArray = new int[10][][];
+		long[] timeArray = new long[10];
 		
 		for (int h=0;h<10;h++) {
 			pix = this.keys.take_screen(bbox1, h);
 			pixArray[h] = pix;
 			if (h==0) {
+				millis=System.currentTimeMillis();
 				this.keys.jump_press(ms);
+			}
+			else {
+				timeArray[h] = System.currentTimeMillis() - millis;
 			}
 		}
 		
@@ -133,16 +129,11 @@ public class Play {
 			if (path[time] == path[0] && time != 0) {
 				if (jumped) {
 					done = true;
-					jumpTime = time-startTime;
+					jumpTime = time;
 				}
 				else {
 					jumped = true;
 					
-				}
-			}
-			else {
-				if (startTime == -1 && time != 0) {
-					startTime = time-1;
 				}
 			}
 			
@@ -160,21 +151,18 @@ public class Play {
 		}
 		System.out.println(']');
 		*/
+		height = DINOY - height;
+		jumpTime = timeArray[(int) jumpTime];
 		
-		
-		
-		
-		long[] heightJump = {height, jumpTime, startTime};
+		long[] heightJump = {height, jumpTime};
 		
 		this.keys.close_game();
-		/*
+		
 		System.out.print("height: ");
 		System.out.println(height);
 		System.out.print("jumpTime: ");
 		System.out.println(jumpTime);
-		System.out.print("startTime: ");
-		System.out.println(startTime);
-		*/
+		
 		
 		return heightJump;
 	}

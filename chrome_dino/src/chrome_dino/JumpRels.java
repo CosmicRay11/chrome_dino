@@ -35,25 +35,22 @@ public class JumpRels {
 		
 		int repetitions = 10;
 		
-		double[][] data = new double[numberOfJumps][3];
+		double[][] data = new double[numberOfJumps][2];
 		
 		
 		for (int ms=msJumps; ms<msJumps*numberOfJumps; ms = ms+msJumps) {
 			long heightSum = 0;
 			long jumpTimeSum = 0;
-			long startDelaySum = 0;
 			System.out.println(ms);
 			for (int rep=0;rep<repetitions;rep++) {
 				long[] heightJump = player.determine_jump(ms);
 				heightSum += heightJump[0];
 				jumpTimeSum += heightJump[1];
-				startDelaySum += heightJump[2];
 			}
 			double avHeight = (float) heightSum / repetitions;
 			double avJumpTime =  (float) jumpTimeSum / repetitions;
-			double avStartDelay =  (float) startDelaySum / repetitions;
 			
-			double[] miniData = {avHeight, avJumpTime, avStartDelay};
+			double[] miniData = {avHeight, avJumpTime};
 			data[ms/msJumps] = miniData;
 		}
 		return data;
@@ -69,8 +66,6 @@ public class JumpRels {
 				writer.println("");
 				writer.print(data[entry][1]);
 				writer.println("");
-				writer.print(data[entry][2]);
-				writer.println("");
 			}
 			
 			writer.close();
@@ -81,24 +76,22 @@ public class JumpRels {
 	}
 	
 	public double[][] unpack_jump_rels() {
-		double[][] jumpData = new double[numberOfJumps][3];
+		double[][] jumpData = new double[numberOfJumps][2];
 		FileReader fileReader;
 		try {
 			fileReader = new FileReader(jumpRelPath);
 
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-            String line1,line2,line3;
+            String line1,line2;
             
 			try {
 				for (int entry=0;entry<numberOfJumps;entry++) {
 					line1 =  bufferedReader.readLine();
 					line2 =  bufferedReader.readLine();
-					line3 =  bufferedReader.readLine();
 					if (line1 != null) {
 						jumpData[entry][0] = Double.parseDouble(line1);
 						jumpData[entry][1] = Double.parseDouble(line2);
-						jumpData[entry][2] = Double.parseDouble(line3);
 					}
 					
 				}
