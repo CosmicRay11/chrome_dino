@@ -7,16 +7,26 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
-public class GetJumpRels {
+public class JumpRels {
 	
 	String jumpRelPath = "jump_rels.txt";
 	int msJumps = 5;
 	int numberOfJumps = 100;
 
-	public GetJumpRels() {
+	public JumpRels() {
 		//double[][] jumpData = determine_all_jump_rels();
-		double[][] jumpData = {{1,2,3}, {5,4,6}};
-		save_jump_rels(jumpData);
+	}
+	
+	public double[][] get_jump_rels(boolean saved) {
+		double[][] jumpData;
+		if (saved) {
+			jumpData = unpack_jump_rels();
+		}
+		else {
+			jumpData = determine_all_jump_rels();
+			save_jump_rels(jumpData);
+		}
+		return jumpData;
 	}
 	
 	public double[][] determine_all_jump_rels() {
@@ -55,11 +65,11 @@ public class GetJumpRels {
 			writer = new PrintWriter("jump_rels.txt", "UTF-8");
 			for (int entry=0;entry<data.length;entry++) {
 				writer.print(data[entry][0]);
-				writer.print(',');
+				writer.println("");
 				writer.print(data[entry][1]);
-				writer.print(',');
+				writer.println("");
 				writer.print(data[entry][2]);
-				writer.print('!');
+				writer.println("");
 			}
 			
 			writer.close();
@@ -71,21 +81,27 @@ public class GetJumpRels {
 	
 	public double[][] unpack_jump_rels() {
 		double[][] jumpData = new double[numberOfJumps][3];
-		
 		FileReader fileReader;
 		try {
 			fileReader = new FileReader(jumpRelPath);
 
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-            String line = null;
+            String line1,line2,line3;
             
 			try {
-				while((line  = bufferedReader.readLine()) != null) {
-				    System.out.println(line);
+				for (int entry=0;entry<numberOfJumps;entry++) {
+					line1 =  bufferedReader.readLine();
+					line2 =  bufferedReader.readLine();
+					line3 =  bufferedReader.readLine();
+					if (line1 != null) {
+						jumpData[entry][0] = Double.parseDouble(line1);
+						jumpData[entry][1] = Double.parseDouble(line2);
+						jumpData[entry][2] = Double.parseDouble(line3);
+					}
+					
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}   
 

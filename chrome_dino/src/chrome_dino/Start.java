@@ -13,7 +13,18 @@ public class Start {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		JumpRels j = new JumpRels();
+		
+		double[][] jumpRels = j.get_jump_rels(false);
+		
+		for (int i=0;i<jumpRels.length;i++) {
+			for (int a=0;a<3;a++) {
+				System.out.print(jumpRels[i][a]);
+				System.out.print(" , ");
+			}
+			System.out.println("");
+		}
+		
 
 	}
 
